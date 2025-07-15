@@ -12,8 +12,10 @@ const RegisterPage: React.FC = () => {
   
   const [formData, setFormData] = useState({
     name: '',
+    email: '',
     mobileNumber: '',
     password: '',
+    confirmPassword: '',
     location: '',
     preferredLanguage: '',
     role: '',
@@ -35,8 +37,14 @@ const RegisterPage: React.FC = () => {
     setIsSubmitting(true);
     setError(null);
 
+    if (formData.password !== formData.confirmPassword) {
+      setIsSubmitting(false);
+      setError('Passwords do not match.');
+      return;
+    }
+
     const auth = getAuth(app);
-    const email = `${formData.mobileNumber}@say2sell.com`;
+    const email = formData.email;
     const password = formData.password;
 
     try {
@@ -106,6 +114,17 @@ const RegisterPage: React.FC = () => {
             />
             
             <FormInput
+              id="email"
+              label="Email ID"
+              type="email"
+              placeholder="Enter your email address"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              autoComplete="email"
+            />
+            
+            <FormInput
               id="mobileNumber"
               label="Mobile Number"
               type="tel"
@@ -122,6 +141,16 @@ const RegisterPage: React.FC = () => {
               type="password"
               placeholder="Create a password"
               value={formData.password}
+              onChange={handleChange}
+              required
+              autoComplete="new-password"
+            />
+            <FormInput
+              id="confirmPassword"
+              label="Confirm Password"
+              type="password"
+              placeholder="Re-enter your password"
+              value={formData.confirmPassword}
               onChange={handleChange}
               required
               autoComplete="new-password"
