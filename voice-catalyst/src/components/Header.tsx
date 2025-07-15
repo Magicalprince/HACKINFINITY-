@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { LANGUAGES } from '../utils/dummyData';
+import { translateText } from '../utils/translateText';
 
 interface HeaderProps {
   showLoginButton?: boolean;
@@ -9,12 +10,45 @@ interface HeaderProps {
   onLanguageChange?: (code: string) => void;
 }
 
+const EN_TEXT = {
+  brand: 'say2sale',
+  login: 'Login',
+  register: 'Register',
+};
+
 const Header: React.FC<HeaderProps> = ({
   showLoginButton = true,
   showRegisterButton = true,
   currentLanguage = 'en',
   onLanguageChange = () => {},
 }) => {
+  const [translated, setTranslated] = useState(EN_TEXT);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (currentLanguage === 'en') {
+      setTranslated(EN_TEXT);
+      return;
+    }
+    setLoading(true);
+    const translateAll = async () => {
+      const entries = Object.entries(EN_TEXT);
+      const translatedEntries = await Promise.all(
+        entries.map(async ([key, value]) => {
+          try {
+            const t = await translateText(value, 'English', currentLanguage);
+            return [key, t];
+          } catch {
+            return [key, value];
+          }
+        })
+      );
+      setTranslated(Object.fromEntries(translatedEntries));
+      setLoading(false);
+    };
+    translateAll();
+  }, [currentLanguage]);
+
   return (
     <header className="bg-white shadow-sm py-4">
       <div className="container mx-auto px-4 flex items-center justify-between">
@@ -22,9 +56,8 @@ const Header: React.FC<HeaderProps> = ({
           <div className="w-10 h-10 rounded-full gradient-bg flex items-center justify-center text-white font-bold mr-3">
             S2S
           </div>
-          <span className="text-gradient font-bold text-xl">say2sale</span>
+          <span className="text-gradient font-bold text-xl">{loading ? '...' : translated.brand}</span>
         </Link>
-
         <div className="flex items-center space-x-4">
           {/* Language Selector */}
           <div className="relative">
@@ -45,20 +78,17 @@ const Header: React.FC<HeaderProps> = ({
               </svg>
             </div>
           </div>
-
           {/* Auth Buttons */}
-          <div className="flex items-center space-x-2">
-            {showLoginButton && (
-              <Link to="/login" className="btn btn-secondary">
-                Login
-              </Link>
-            )}
-            {showRegisterButton && (
-              <Link to="/register" className="btn btn-primary">
-                Register
-              </Link>
-            )}
-          </div>
+          {showLoginButton && (
+            <Link to="/login" className="btn btn-outline">
+              {loading ? '...' : translated.login}
+            </Link>
+          )}
+          {showRegisterButton && (
+            <Link to="/register" className="btn btn-primary">
+              {loading ? '...' : translated.register}
+            </Link>
+          )}
         </div>
       </div>
     </header>
