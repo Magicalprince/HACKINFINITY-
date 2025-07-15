@@ -215,7 +215,7 @@ const Dashboard: React.FC = () => {
     <Layout showLoginButton={false} showRegisterButton={false}>
       <div className="max-w-6xl mx-auto">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold">
+          <h1 className="text-3xl font-bold text-gradient">
             Welcome, {user?.name || 'User'}
           </h1>
           <button 
@@ -229,14 +229,14 @@ const Dashboard: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Left Column - Voice Input */}
           <div className="md:col-span-1">
-            <div className="card mb-6">
+            <div className="card mb-6 border-l-4 border-l-green-500">
               <h2 className="text-xl font-semibold mb-4">Add Product by Voice</h2>
               
               <div className="mb-4">
                 <label className="form-label">Voice Language</label>
                 <div className="relative">
                   <select
-                    className="form-input appearance-none"
+                    className="form-input appearance-none border-green-100"
                     value={voiceLanguage}
                     onChange={(e) => setVoiceLanguage(e.target.value)}
                   >
@@ -279,7 +279,7 @@ const Dashboard: React.FC = () => {
               </div>
             </div>
             
-            <div className="card">
+            <div className="card border-l-4 border-l-green-600">
               <h2 className="text-xl font-semibold mb-4">Share Your Catalog</h2>
               <div className="flex flex-col space-y-3">
                 <button
@@ -404,7 +404,7 @@ const Dashboard: React.FC = () => {
             ) : (
               <div className="mb-6">
                 <div className="flex justify-between items-center mb-4">
-                  <h2 className="text-xl font-semibold">Your Products</h2>
+                  <h2 className="text-xl font-semibold text-gradient">Your Products</h2>
                   <span className="text-gray-600">
                     {products.length} {products.length === 1 ? 'product' : 'products'}
                   </span>

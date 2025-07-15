@@ -20,7 +20,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <h3 className="text-xl font-semibold text-gray-800">{product.name}</h3>
         <div className="flex justify-between items-center mt-2">
           <span className="text-gray-600">{product.quantity}</span>
-          <span className="font-bold text-lg text-blue-600">₹{product.price.toLocaleString()}</span>
+          <span className="font-bold text-lg text-green-600">₹{product.price.toLocaleString()}</span>
         </div>
       </div>
       
@@ -37,7 +37,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <div className="mt-4 pt-4 border-t border-gray-200 flex justify-end space-x-2">
           <button
             onClick={() => onEdit && onEdit(product)}
-            className="px-3 py-1 bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition-colors"
+            className="px-3 py-1 gradient-bg text-white rounded hover:opacity-90 transition-opacity"
           >
             Edit
           </button>

@@ -49,7 +49,7 @@ const LoginPage: React.FC = () => {
   return (
     <Layout showLoginButton={false}>
       <div className="max-w-md mx-auto">
-        <h1 className="text-3xl font-bold text-center mb-6">Login to Your Account</h1>
+        <h1 className="text-3xl font-bold text-center mb-6 text-gradient">Login to Your Account</h1>
         
         <div className="card">
           {error && (
@@ -95,7 +95,7 @@ const LoginPage: React.FC = () => {
           <div className="mt-4 text-center">
             <p className="text-gray-600">
               Don't have an account?{' '}
-              <Link to="/register" className="text-blue-600 hover:underline">
+              <Link to="/register" className="text-green-600 hover:underline">
                 Register now
               </Link>
             </p>
@@ -108,7 +108,7 @@ const LoginPage: React.FC = () => {
             {DUMMY_USERS.map((user) => (
               <li key={user.id} className="mb-1">
                 <button
-                  className="text-blue-600 hover:underline"
+                  className="text-green-600 hover:underline"
                   onClick={() => {
                     setFormData({
                       mobileNumber: user.mobileNumber,

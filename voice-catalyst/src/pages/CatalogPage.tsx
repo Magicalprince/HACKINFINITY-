@@ -53,12 +53,14 @@ const CatalogPage: React.FC = () => {
     <Layout>
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-10">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">
+          <h1 className="text-3xl font-bold text-gradient mb-2">
             {user.name}'s Catalog
           </h1>
-          <p className="text-gray-600">
-            {user.role} · {user.location}
-          </p>
+          <div className="inline-block bg-green-50 px-4 py-2 rounded-full">
+            <p className="text-green-700">
+              {user.role} · {user.location}
+            </p>
+          </div>
         </div>
         
         {products.length === 0 ? (

@@ -64,7 +64,7 @@ const RegisterPage: React.FC = () => {
   return (
     <Layout showRegisterButton={false}>
       <div className="max-w-md mx-auto">
-        <h1 className="text-3xl font-bold text-center mb-6">Create Your Account</h1>
+        <h1 className="text-3xl font-bold text-center mb-6 text-gradient">Create Your Account</h1>
         
         <div className="card">
           <form onSubmit={handleSubmit}>
@@ -130,7 +130,7 @@ const RegisterPage: React.FC = () => {
           <div className="mt-4 text-center">
             <p className="text-gray-600">
               Already have an account?{' '}
-              <Link to="/login" className="text-blue-600 hover:underline">
+              <Link to="/login" className="text-green-600 hover:underline">
                 Log in
               </Link>
             </p>

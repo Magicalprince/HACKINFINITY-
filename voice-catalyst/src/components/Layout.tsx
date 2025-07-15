@@ -33,8 +33,16 @@ const Layout: React.FC<LayoutProps> = ({
       </main>
       
       <footer className="bg-white shadow-inner py-6">
-        <div className="container mx-auto px-4 text-center text-gray-500 text-sm">
-          &copy; {new Date().getFullYear()} VoiceCatalyst - Creating Digital Catalogs with Voice
+        <div className="container mx-auto px-4 text-center">
+          <div className="flex justify-center items-center mb-4">
+            <div className="w-8 h-8 rounded-full gradient-bg flex items-center justify-center text-white font-bold text-xs mr-2">
+              S2S
+            </div>
+            <span className="text-gradient font-bold text-lg">say2sale</span>
+          </div>
+          <p className="text-gray-500 text-sm">
+            &copy; {new Date().getFullYear()} say2sale - Creating Digital Catalogs with Voice
+          </p>
         </div>
       </footer>
     </div>

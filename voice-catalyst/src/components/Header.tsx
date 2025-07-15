@@ -19,14 +19,17 @@ const Header: React.FC<HeaderProps> = ({
     <header className="bg-white shadow-sm py-4">
       <div className="container mx-auto px-4 flex items-center justify-between">
         <Link to="/" className="flex items-center">
-          <span className="text-blue-600 font-bold text-xl">VoiceCatalyst</span>
+          <div className="w-10 h-10 rounded-full gradient-bg flex items-center justify-center text-white font-bold mr-3">
+            S2S
+          </div>
+          <span className="text-gradient font-bold text-xl">say2sale</span>
         </Link>
 
         <div className="flex items-center space-x-4">
           {/* Language Selector */}
           <div className="relative">
             <select 
-              className="appearance-none bg-gray-50 border border-gray-300 rounded-lg py-2 px-3 pr-8 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="appearance-none bg-white border border-gray-200 rounded-lg py-2 px-3 pr-8 focus:outline-none focus:ring-2 focus:ring-green-500"
               value={currentLanguage}
               onChange={(e) => onLanguageChange(e.target.value)}
             >
