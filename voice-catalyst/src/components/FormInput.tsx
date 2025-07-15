@@ -29,6 +29,7 @@ const FormInput: React.FC<FormInputProps> = ({
       </label>
       <input
         id={id}
+        name={id}
         type={type}
         className="form-input"
         placeholder={placeholder}

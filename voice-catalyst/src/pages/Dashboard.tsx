@@ -9,12 +9,11 @@ import FormInput from '../components/FormInput';
 // import FormSelect from '../components/FormSelect';
 import ProductCard from '../components/ProductCard';
 import { 
-  getUserById, 
-  getProductsByUserId, 
   generateCatalogShareUrl,
   LANGUAGES, 
 } from '../utils/dummyData';
 import { Product, User } from '../types';
+import { getAuth } from "firebase/auth";
 
 const Dashboard: React.FC = () => {
   const location = useLocation();
@@ -39,34 +38,26 @@ const Dashboard: React.FC = () => {
   });
   
   useEffect(() => {
-    // Check if user ID is in location state
-    const userId = location.state?.userId || localStorage.getItem('userId');
-    
-    if (!userId) {
-      // Redirect to login if no user ID
+    const auth = getAuth();
+    const firebaseUser = auth.currentUser;
+    if (!firebaseUser) {
       navigate('/login');
       return;
     }
-    
-    // Store user ID in local storage for persistence
-    localStorage.setItem('userId', userId);
-    
-    // Get user and their products
-    const userData = getUserById(userId);
-    if (userData) {
-      setUser(userData);
-      setVoiceLanguage(userData.preferredLanguage);
-      
-      // Get user's products
-      const userProducts = getProductsByUserId(userData.id);
-      setProducts(userProducts);
-    } else {
-      // Redirect to login if user not found
-      navigate('/login');
-    }
-    
+    // Set user info from Firebase Auth
+    setUser({
+      id: firebaseUser.uid,
+      name: firebaseUser.displayName || firebaseUser.email || 'User',
+      mobileNumber: '', // TODO: Fetch from Firestore/SQL if available
+      location: '', // TODO: Fetch from Firestore/SQL if available
+      preferredLanguage: 'en', // TODO: Fetch from Firestore/SQL if available
+      role: 'Farmer', // TODO: Fetch from Firestore/SQL if available
+    });
+    setVoiceLanguage('en');
+    // TODO: Fetch products for this user from Firestore/SQL
+    setProducts([]);
     setIsLoading(false);
-  }, [location.state, navigate]);
+  }, [navigate]);
   
   // Handle voice input
   const handleVoiceTranscription = (text: string) => {
@@ -132,7 +123,7 @@ const Dashboard: React.FC = () => {
   // Handle product form submission
   const handleProductSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+    // TODO: Save product to Firestore/SQL
     const newProduct: Product = {
       id: editingProduct ? editingProduct.id : `product-${Date.now()}`,
       userId: user?.id || '',
@@ -144,16 +135,11 @@ const Dashboard: React.FC = () => {
       createdAt: editingProduct ? editingProduct.createdAt : new Date(),
       updatedAt: new Date(),
     };
-    
     if (editingProduct) {
-      // Update existing product
       setProducts(products.map(p => p.id === editingProduct.id ? newProduct : p));
     } else {
-      // Add new product
       setProducts([...products, newProduct]);
     }
-    
-    // Reset form and editing state
     setProductForm({
       name: '',
       quantity: '',
@@ -191,7 +177,7 @@ const Dashboard: React.FC = () => {
   
   // Copy catalog link to clipboard
   const copyLinkToClipboard = () => {
-    const catalogUrl = generateCatalogShareUrl(user?.id || '');
+    const catalogUrl = user ? generateCatalogShareUrl(user.id) : '';
     navigator.clipboard.writeText(catalogUrl)
       .then(() => {
         alert('Catalog link copied to clipboard!');
@@ -205,7 +191,7 @@ const Dashboard: React.FC = () => {
     return <div className="flex justify-center items-center h-screen">Loading...</div>;
   }
   
-  const catalogUrl = generateCatalogShareUrl(user?.id || '');
+  const catalogUrl = user ? generateCatalogShareUrl(user.id) : '';
   const languageOptions = LANGUAGES.map((lang) => ({
     value: lang.code,
     label: lang.displayName,

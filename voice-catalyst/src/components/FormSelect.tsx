@@ -31,6 +31,7 @@ const FormSelect: React.FC<FormSelectProps> = ({
       <div className="relative">
         <select
           id={id}
+          name={id}
           className="form-input appearance-none"
           value={value}
           onChange={onChange}
