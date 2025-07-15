@@ -26,6 +26,7 @@ const Dashboard: React.FC = () => {
   const [showQRModal, setShowQRModal] = useState(false);
   const [showProductForm, setShowProductForm] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const [showCatalog, setShowCatalog] = useState(false);
   
   const [voiceLanguage, setVoiceLanguage] = useState('en');
   
@@ -302,6 +303,94 @@ const Dashboard: React.FC = () => {
           
           {/* Right Column - Products & Form */}
           <div className="md:col-span-2">
+            <div className="flex justify-end mb-4">
+              <button
+                className="btn btn-primary"
+                onClick={() => setShowCatalog(true)}
+              >
+                Generate Catalog
+              </button>
+            </div>
+            {showCatalog && (
+              <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                <div className="bg-gradient-to-br from-green-50 to-white rounded-3xl shadow-2xl p-0 max-w-3xl w-full relative border-2 border-green-200">
+                  <button
+                    className="absolute top-6 right-8 text-gray-400 hover:text-green-700 text-3xl font-bold transition-colors"
+                    onClick={() => setShowCatalog(false)}
+                    aria-label="Close Catalog"
+                  >
+                    &times;
+                  </button>
+                  <div className="rounded-t-3xl bg-gradient-to-r from-green-600 to-green-400 p-8 text-center shadow-md">
+                    <h2 className="text-4xl font-extrabold text-white tracking-tight mb-2 drop-shadow-lg">Shop Catalog</h2>
+                    <p className="text-lg text-green-100 font-medium">Welcome to <span className="font-bold text-white">GreenMart</span></p>
+                  </div>
+                  <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-8 px-8 py-6 bg-white rounded-b-3xl">
+                    <div className="flex-1 flex flex-col items-center md:items-start">
+                      <div className="flex items-center mb-2">
+                        <svg className="w-6 h-6 text-green-600 mr-2" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M3 7V6a4 4 0 014-4h10a4 4 0 014 4v1"/><path d="M21 10v10a2 2 0 01-2 2H5a2 2 0 01-2-2V10"/><path d="M16 21v-4a2 2 0 00-2-2H10a2 2 0 00-2 2v4"/></svg>
+                        <span className="font-semibold text-gray-700">Shop Name:</span>
+                      </div>
+                      <div className="text-green-700 text-lg font-bold mb-4">GreenMart</div>
+                    </div>
+                    <div className="flex-1 flex flex-col items-center md:items-start">
+                      <div className="flex items-center mb-2">
+                        <svg className="w-6 h-6 text-green-600 mr-2" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z"/><path d="M6.343 17.657A8 8 0 0112 16a8 8 0 015.657 1.657"/></svg>
+                        <span className="font-semibold text-gray-700">Owner Name:</span>
+                      </div>
+                      <div className="text-green-700 text-lg font-bold mb-4">Tarun Gopinath</div>
+                    </div>
+                    <div className="flex-1 flex flex-col items-center md:items-start">
+                      <div className="flex items-center mb-2">
+                        <svg className="w-6 h-6 text-green-600 mr-2" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M2 8.5A2.5 2.5 0 014.5 6h15A2.5 2.5 0 0122 8.5v7a2.5 2.5 0 01-2.5 2.5h-15A2.5 2.5 0 012 15.5v-7z"/><path d="M6 10h.01M6 14h.01M10 10h.01M10 14h.01M14 10h.01M14 14h.01M18 10h.01M18 14h.01"/></svg>
+                        <span className="font-semibold text-gray-700">Contact Number:</span>
+                      </div>
+                      <div className="text-green-700 text-lg font-bold mb-4">+91 98765 43210</div>
+                    </div>
+                  </div>
+                  <div className="overflow-x-auto px-8 pb-8">
+                    <table className="min-w-full bg-white border border-green-200 rounded-xl shadow-lg">
+                      <thead className="bg-gradient-to-r from-green-600 to-green-400 text-white">
+                        <tr>
+                          <th className="py-3 px-4 rounded-tl-xl text-lg font-semibold tracking-wide">Date</th>
+                          <th className="py-3 px-4 text-lg font-semibold tracking-wide">Product</th>
+                          <th className="py-3 px-4 text-lg font-semibold tracking-wide">Quantity</th>
+                          <th className="py-3 px-4 text-lg font-semibold tracking-wide">Price (₹)</th>
+                          <th className="py-3 px-4 rounded-tr-xl text-lg font-semibold tracking-wide">Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr className="even:bg-green-50 hover:bg-green-100 transition">
+                          <td className="py-3 px-4 font-medium">2024-06-01</td>
+                          <td className="py-3 px-4 flex items-center gap-2"><span className="inline-block bg-green-100 rounded-full p-1"><svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20z"/><path d="M12 6v6l4 2"/></svg></span>Organic Rice</td>
+                          <td className="py-3 px-4">25 kg</td>
+                          <td className="py-3 px-4">1200</td>
+                          <td className="py-3 px-4">High quality organic rice</td>
+                        </tr>
+                        <tr className="even:bg-green-50 hover:bg-green-100 transition">
+                          <td className="py-3 px-4 font-medium">2024-06-01</td>
+                          <td className="py-3 px-4 flex items-center gap-2"><span className="inline-block bg-green-100 rounded-full p-1"><svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20z"/><path d="M12 6v6l4 2"/></svg></span>Fresh Tomatoes</td>
+                          <td className="py-3 px-4">10 kg</td>
+                          <td className="py-3 px-4">400</td>
+                          <td className="py-3 px-4">Farm fresh, juicy tomatoes</td>
+                        </tr>
+                        <tr className="even:bg-green-50 hover:bg-green-100 transition">
+                          <td className="py-3 px-4 font-medium">2024-06-01</td>
+                          <td className="py-3 px-4 flex items-center gap-2"><span className="inline-block bg-green-100 rounded-full p-1"><svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20z"/><path d="M12 6v6l4 2"/></svg></span>Pure Honey</td>
+                          <td className="py-3 px-4">5 kg</td>
+                          <td className="py-3 px-4">2500</td>
+                          <td className="py-3 px-4">Natural, unprocessed honey</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div className="mt-8 text-center pb-4">
+                    <span className="text-green-700 font-extrabold text-xl">Thank you for visiting our catalog!</span>
+                    <div className="mt-2 text-gray-500 text-sm">For orders, contact us at <span className="underline">+91 98765 43210</span> or visit <span className="underline text-green-700">GreenMart</span> in person.</div>
+                  </div>
+                </div>
+              </div>
+            )}
             {showProductForm ? (
               <div className="card mb-6">
                 <div className="flex justify-between items-center mb-4">
