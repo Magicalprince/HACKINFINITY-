@@ -29,7 +29,9 @@ export default async function handler(
       password, 
       location, 
       preferred_language, 
-      user_role 
+      user_role,
+      shop_name,
+      shop_address
     } = req.body;
 
     // Validate input
@@ -53,7 +55,9 @@ export default async function handler(
         password: hashedPassword,
         location: location || null,
         preferred_language: preferred_language || 'en',
-        user_role
+        user_role,
+        shop_name: shop_name || null,
+        shop_address: shop_address || null
       }, { transaction: t });
 
       // Create user record
@@ -64,7 +68,9 @@ export default async function handler(
         password: hashedPassword,
         location: location || null,
         preferred_language: preferred_language || 'en',
-        user_role
+        user_role,
+        shop_name: shop_name || null,
+        shop_address: shop_address || null
       }, { transaction: t });
 
       // Create login record

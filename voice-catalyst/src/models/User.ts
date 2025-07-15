@@ -10,6 +10,8 @@ class User extends Model {
   public location!: string;
   public preferred_language!: string;
   public user_role!: string;
+  public shop_name!: string;
+  public shop_address!: string;
   public created_at!: Date;
 }
 
@@ -48,6 +50,14 @@ User.init({
   user_role: {
     type: DataTypes.STRING(50),
     allowNull: false,
+  },
+  shop_name: {
+    type: DataTypes.STRING(100),
+    allowNull: true,
+  },
+  shop_address: {
+    type: DataTypes.STRING(255),
+    allowNull: true,
   },
   created_at: {
     type: DataTypes.DATE,

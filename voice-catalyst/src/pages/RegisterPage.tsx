@@ -6,6 +6,7 @@ import FormSelect from '../components/FormSelect';
 import { LANGUAGES } from '../utils/dummyData';
 import { getAuth, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import app from "../firebase";
+import { authAPI } from '../services/api';
 
 const RegisterPage: React.FC = () => {
   const navigate = useNavigate();
@@ -19,6 +20,8 @@ const RegisterPage: React.FC = () => {
     location: '',
     preferredLanguage: '',
     role: '',
+    shopName: '',
+    shopAddress: '',
   });
   
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -48,7 +51,22 @@ const RegisterPage: React.FC = () => {
     const password = formData.password;
 
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      // First register with Firebase
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      
+      // Then register with our backend
+      await authAPI.register({
+        full_name: formData.name,
+        email: formData.email,
+        mobile_number: formData.mobileNumber,
+        password: formData.password,
+        location: formData.location,
+        preferred_language: formData.preferredLanguage,
+        user_role: formData.role,
+        shop_name: formData.shopName,
+        shop_address: formData.shopAddress
+      });
+      
       setIsSubmitting(false);
       navigate('/login');
     } catch (error: any) {
@@ -95,6 +113,9 @@ const RegisterPage: React.FC = () => {
     { value: 'Kolkata', label: 'Kolkata' },
     { value: 'Other', label: 'Other' },
   ];
+
+  // Check if shop details should be displayed
+  const showShopDetails = formData.role === 'Farmer' || formData.role === 'Artisan' || formData.role === 'Kirana Shop Owner';
   
   return (
     <Layout showRegisterButton={false}>
@@ -182,6 +203,28 @@ const RegisterPage: React.FC = () => {
               onChange={handleChange}
               required
             />
+            
+            {showShopDetails && (
+              <>
+                <FormInput
+                  id="shopName"
+                  label="Shop Name"
+                  placeholder="Enter your shop name"
+                  value={formData.shopName}
+                  onChange={handleChange}
+                  required
+                />
+                
+                <FormInput
+                  id="shopAddress"
+                  label="Shop Address"
+                  placeholder="Enter your shop address"
+                  value={formData.shopAddress}
+                  onChange={handleChange}
+                  required
+                />
+              </>
+            )}
             
             {error && (
               <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-4">
